@@ -20,10 +20,13 @@ import TaskInfoCard from './TaskInfoCard.vue'
 </template>
 <style>
     .taskCardList {
-        width: 28%;
+        width: 32%;
         padding: 1.5rem;
         background-color: white;
         border-radius: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
     }
 
     .taskCardList__title {
