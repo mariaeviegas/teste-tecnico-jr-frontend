@@ -1,7 +1,13 @@
 <template>
-    <SearchAddBar/>
+    <TaskList/>
 </template>
 
-<script setup>
-   import SearchAddBar from './components/SearchAddBar.vue';
+<script>
+   import TaskList from './views/TaskList.vue';
+
+   export default{
+    components: {
+        TaskList
+    }
+   };
 </script>
