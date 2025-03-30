@@ -35,16 +35,18 @@
     .searchAddBar__button {
         width: fit-content;
         padding: 1rem 1.5rem;
-        border: none;
+        border: 2px solid #fff;
         border-radius: 0.75rem;
-        background-color: #514983;
+        background-color: transparent;
         font-size: 1rem;
         color: #fff;
         cursor: pointer;
-        transition: 0.5s;
+        transition: 0.1s;
 
         &&:hover {
-            background-color: #514983c9;
+            background-color: #514983;
+            color: #fff;
+            border: 2px solid #514983;
         }
     }
 </style>
