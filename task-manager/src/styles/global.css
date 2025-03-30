@@ -3,13 +3,13 @@
     --primary-color: #261F47;
     --secondary-color: #514983;
 
-    --pending-status: #F7E96D;
+    --pending-status: #fff56b;
     --pending-status-hover: #f7e96dd2;
     --inProgress-status: #6FCAFF;
     --inProgress-status-hover: #6fcaffd2;
     --completed-status: #8FFFA1;
     --completed-status-hover: #8fffa2d2;
-    --text-card-color: #131212;
+    --text-card-color: #383838;
 }
 
 body {

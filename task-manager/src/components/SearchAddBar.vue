@@ -30,7 +30,7 @@ const dialog = ref(false);
   width: 40%;
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   font-size: 1rem;
   background-color: white;
 }

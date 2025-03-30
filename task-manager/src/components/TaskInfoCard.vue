@@ -1,9 +1,28 @@
-<script setup></script>
+<script setup>
+const items = [
+    { title: 'Editar' },
+    { title: 'Excluir' },
+  ]
+</script>
 <template>
     <div class="taskInfoCard">
         <div class="taskInfoCard__mainInfo">
             <h1 class="mainInfo__title">ID - Titulo da tarefa</h1>
-             <!-- TODO: menu do card -->
+            <v-menu>
+            <template v-slot:activator="{ props }">
+              <v-btn icon="mdi-dots-horizontal" variant="text" v-bind="props"></v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item
+                v-for="(item, i) in items"
+                :key="i"
+                :value="i"
+              >
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </div>
 
         <p class="taskInfoCard__description">
@@ -30,11 +49,20 @@
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+}
+
+.taskInfoCard__mainInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .mainInfo__title {
     font-size: 18px;
+    margin: 0rem;
+    color: var(--text-card-color);
 }
 
 .taskInfoCard__description {
