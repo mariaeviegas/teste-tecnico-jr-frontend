@@ -1,13 +1,15 @@
 <template>
-    <TaskList/>
-</template>
-
-<script>
-   import TaskList from './views/TaskList.vue';
-
-   export default{
+    <v-app>
+      <TaskList />
+    </v-app>
+  </template>
+  
+  <script>
+  import TaskList from './views/TaskList.vue';
+  
+  export default {
     components: {
-        TaskList
-    }
-   };
-</script>
+      TaskList,
+    },
+  };
+  </script>
