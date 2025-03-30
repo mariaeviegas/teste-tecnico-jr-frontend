@@ -33,6 +33,16 @@ const dialog = ref(false);
   border-radius: 1rem;
   font-size: 1rem;
   background-color: white;
+  outline: none;
+
+  &&:focus {
+    background-color: var(--secondary-color);
+
+    &&::placeholder {
+      color: white;
+    }
+  }
+
 }
 
 .searchAddBar__button {
