@@ -1,13 +1,29 @@
 <script setup>
+
 const items = [
     { title: 'Editar' },
     { title: 'Excluir' },
-  ]
+];
+
+defineProps({
+    taskId: {
+        type: Number,
+        required: true,
+    },
+    taskTitle: {
+        type: String,
+        required: true,
+    },
+    taskDescription: {
+        type: String,
+        required: true,
+    },
+});
 </script>
 <template>
     <div class="taskInfoCard">
         <div class="taskInfoCard__mainInfo">
-            <h1 class="mainInfo__title">ID - Titulo da tarefa</h1>
+            <h1 class="mainInfo__title">{{ taskId }} - {{ taskTitle }}</h1>
             <v-menu>
             <template v-slot:activator="{ props }">
               <v-btn icon="mdi-dots-horizontal" variant="text" v-bind="props"></v-btn>
@@ -25,14 +41,7 @@ const items = [
           </v-menu>
         </div>
 
-        <p class="taskInfoCard__description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-            occaecat cupidatat.
-        </p>
+        <p v-if="taskDescription != null" class="taskInfoCard__description">{{ taskDescription }}</p>
 
         <div class="taskInfoCard__deadLine">
             <v-icon icon="mdi-calendar" />
@@ -73,6 +82,7 @@ const items = [
     text-overflow: ellipsis;
     font-weight: 200;
     line-height: 1.5;
+    margin: 0.5rem 0rem 0.75rem;
 }
 
 .taskInfoCard__deadLine {

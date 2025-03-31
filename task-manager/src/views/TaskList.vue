@@ -1,21 +1,35 @@
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
+import api from '../plugins/axios.js';
 import SearchAddBar from '../components/SearchAddBar.vue'
 import TaskCardList from '../components/TaskCardList.vue'
 
-export default {
-    components: {
-        SearchAddBar,
-        TaskCardList,
-    },
-};
+const tasks = ref([]);
+const pendingTasks = ref([]);
+const inProgressTasks = ref([]);
+const completedTasks = ref([]);
+
+onMounted(() => {
+    api.get('/tasks')
+    .then((response) => {
+        tasks.value = response.data;
+
+        pendingTasks.value = tasks.value.filter(task => task.status === 'pending');
+        inProgressTasks.value = tasks.value.filter(task => task.status === 'inProgress');
+        completedTasks.value = tasks.value.filter(task => task.status === 'completed');
+    })
+    .catch(error => {
+        console.error("Erro ao buscar tarefas:", error);
+    });
+});       
 </script>
 <template>
     <div class="taskList">
         <SearchAddBar/>
         <div class="taskList__sections">
-            <TaskCardList titleCard="Pendente"/>
-            <TaskCardList titleCard="Em andamento"/>
-            <TaskCardList titleCard="Concluído"/>
+            <TaskCardList titleCard="Pendente" :tasks="pendingTasks"/>
+            <TaskCardList titleCard="Em andamento" :tasks="inProgressTasks"/>
+            <TaskCardList titleCard="Concluído" :tasks="completedTasks"/>
         </div>
     </div>
 </template>
