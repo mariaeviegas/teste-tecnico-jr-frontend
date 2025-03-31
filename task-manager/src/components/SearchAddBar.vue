@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from 'vue';
-import FormModal from './FormModal.vue';
+  import { ref } from 'vue';
 
-const dialog = ref(false);
+  const dialog = ref(false);
+  const menu = ref(false);
+  const selectedDate = ref('');
+
 </script>
 
 <template>
@@ -11,7 +13,48 @@ const dialog = ref(false);
     <button class="searchAddBar__button" @click="dialog = true">Adicionar</button>
   </div>
 
-  <FormModal v-model="dialog" />
+  <v-dialog v-model="dialog" max-width="1000">
+    <v-card title="Adicionar tarefa" style="padding: 1.5rem;">
+      <v-card-text>
+        <v-column style="gap: 1.5rem;">
+          <v-text-field clearable label="*Título" variant="outlined" required></v-text-field>
+          <v-textarea clearable label="Descrição" variant="outlined"></v-textarea>
+
+          <v-row>
+            <v-col cols="6">
+              <v-select :items="['Pendente', 'Em andamento', 'Concluído']" label="*Status" chips></v-select>
+            </v-col>
+            <v-col cols="6">
+              <v-menu v-model="menu" transition="scale-transition" min-width="auto">
+                <template v-slot:activator="{ props }">
+                  <v-text-field
+                    v-bind="props"
+                    label="Prazo"
+                    prepend-inner-icon="mdi-calendar"
+                    readonly
+                    clearable
+                    :value="selectedDate"
+                  ></v-text-field>
+                </template>
+                <v-date-picker v-model="selectedDate" @update:model-value="menu = false"></v-date-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
+        </v-column>
+
+        <small class="text-caption text-medium-emphasis">*indica um campo obrigatório</small>
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn text="Fechar" 
+          variant="plain" @click="dialog = false"></v-btn>
+        <v-btn style="background-color: var(--secondary-color); color: white;" text="Adicionar" variant="tonal" @click="closeModal"></v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
