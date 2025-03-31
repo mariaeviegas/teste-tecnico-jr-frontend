@@ -1,5 +1,4 @@
 <script setup>
-
 const items = [
     { title: 'Editar' },
     { title: 'Excluir' },
@@ -19,10 +18,20 @@ defineProps({
         required: false,
     },
     taskStatus: {
-      type: String,
-      required: true
-    }
+        type: String,
+        required: true,
+    },
+    taskDeadLine: {
+        type: String,
+        required: false,
+    },
 });
+
+const formatDate = (dateString) => {
+    if (!dateString) return null;
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+};
 </script>
 <template>
     <div :class="['taskInfoCard', taskStatus]">
@@ -47,9 +56,9 @@ defineProps({
 
         <p v-if="taskDescription != null" class="taskInfoCard__description">{{ taskDescription }}</p>
 
-        <div class="taskInfoCard__deadLine">
+        <div v-if="taskDeadLine != null" class="taskInfoCard__deadLine">
             <v-icon icon="mdi-calendar" />
-            <p class="taskInfoCard__date">25/05/2025</p>
+            <p class="taskInfoCard__date">{{ formatDate(taskDeadLine) }}</p>
         </div>
     </div>
 

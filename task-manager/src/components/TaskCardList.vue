@@ -20,8 +20,9 @@ defineProps ({
             v-for="task in tasks" :key="task.id"
             :taskId="task.id"
             :taskTitle="task.titulo"
-            :taskDescription="task.descricao? task.descricao : null"
+            :taskDescription="task.descricao"
             :taskStatus="task.status"
+            :taskDeadLine="task.deadLine"
         />
     </div>
 </template>
