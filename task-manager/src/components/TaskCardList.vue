@@ -21,10 +21,11 @@ defineProps ({
             :taskId="task.id"
             :taskTitle="task.titulo"
             :taskDescription="task.descricao? task.descricao : null"
+            :taskStatus="task.status"
         />
     </div>
 </template>
-<style>
+<style scoped>
 .taskCardList {
     width: 32%;
     padding: 1.5rem;
@@ -33,6 +34,22 @@ defineProps ({
     display: flex;
     flex-direction: column;
     gap: 1.75rem;
+    max-height: 80vh; 
+    overflow-y: auto; 
+}
+
+.taskCardList::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+.taskCardList::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 0.5rem;
+}
+
+.taskCardList::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 0.5rem;
 }
 
 .taskCardList__title {

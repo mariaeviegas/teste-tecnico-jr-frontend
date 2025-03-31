@@ -3,13 +3,14 @@
     --primary-color: #261F47;
     --secondary-color: #514983;
 
-    --pending-status: #fff56b;
-    --pending-status-hover: #f7e96dd2;
-    --inProgress-status: #6FCAFF;
-    --inProgress-status-hover: #6fcaffd2;
-    --completed-status: #8FFFA1;
-    --completed-status-hover: #8fffa2d2;
-    --text-card-color: #33227e;
+    --pending-status: #fdf8ab;
+    --pending-status-title: #423c00;
+
+    --inProgress-status: #91d5fc;
+    --inProgress-status-title: #012941;
+
+    --completed-status: #aafa9f;
+    --completed-status-title: #0b3a04;
 }
 
 body {

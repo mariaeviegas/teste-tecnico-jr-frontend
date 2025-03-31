@@ -16,14 +16,18 @@ defineProps({
     },
     taskDescription: {
         type: String,
-        required: true,
+        required: false,
     },
+    taskStatus: {
+      type: String,
+      required: true
+    }
 });
 </script>
 <template>
-    <div class="taskInfoCard">
+    <div :class="['taskInfoCard', taskStatus]">
         <div class="taskInfoCard__mainInfo">
-            <h1 class="mainInfo__title">{{ taskId }} - {{ taskTitle }}</h1>
+            <h1 :class="['mainInfo__title', taskStatus]">{{ taskId }} - {{ taskTitle }}</h1>
             <v-menu>
             <template v-slot:activator="{ props }">
               <v-btn icon="mdi-dots-horizontal" variant="text" v-bind="props"></v-btn>
@@ -54,11 +58,31 @@ defineProps({
 .taskInfoCard {
     height: max-content;
     padding: 1rem;
-    background-color: var(--pending-status);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.taskInfoCard:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.pending {
+  background-color: var(--pending-status);
+  color: var(--pending-status-title);
+}
+
+.inProgress {
+  background-color: var(--inProgress-status);
+  color: var(--inProgress-status-title);
+}
+
+.completed {
+  background-color: var(--completed-status);
+  color: var(--completed-status-title);
 }
 
 .taskInfoCard__mainInfo {
@@ -71,7 +95,6 @@ defineProps({
 .mainInfo__title {
     font-size: 18px;
     margin: 0rem;
-    color: var(--text-card-color);
 }
 
 .taskInfoCard__description {
