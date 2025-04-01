@@ -23,7 +23,7 @@ Este é um projeto de gerenciamento de tarefas inspirado no quadro Kanban. Com e
 
 Antes de rodar o frontend, certifique-se de que o backend está em execução. O backend e sua respectiva documentação podem ser encontrados no repositório abaixo:
 
-[https://github.com/mariaeviegas/teste-tecnico-jr-backend.git](#) <!-- Substitua pelo link real -->
+[https://github.com/mariaeviegas/teste-tecnico-jr-backend.git](https://github.com/mariaeviegas/teste-tecnico-jr-backend.git) 
 
 ### Frontend
 
