@@ -22,7 +22,7 @@ defineProps ({
             :taskTitle="task.titulo"
             :taskDescription="task.descricao"
             :taskStatus="task.status"
-            :taskDeadLine="task.deadLine"
+            :taskprazo="task.prazo"
             :taskCreatedAt="task.created_at"
         />
     </div>

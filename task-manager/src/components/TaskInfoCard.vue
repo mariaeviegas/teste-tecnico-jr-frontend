@@ -42,7 +42,7 @@ defineProps({
         type: String,
         required: true,
     },
-    taskDeadLine: {
+    taskprazo: {
         type: String,
         required: false,
     },
@@ -63,12 +63,12 @@ function formatToDate(date) {
     return data.toISOString().split('T')[0];
   }
 
-const openEditTask = (taskId, taskTitle, taskDescription, taskStatus, taskDeadLine, taskCreatedAt) => {
+const openEditTask = (taskId, taskTitle, taskDescription, taskStatus, taskprazo, taskCreatedAt) => {
     id.value = taskId;
     title.value = taskTitle;
     description.value = taskDescription;
     status.value = taskStatus;
-    selectedDate.value = taskDeadLine;
+    selectedDate.value = taskprazo;
     createdAt.value = taskCreatedAt
     dialog.value = true;
 }
@@ -92,7 +92,7 @@ const updateTask = () => {
       titulo: title.value,
       descricao: description.value,
       status: status.value.value,
-      deadLine: selectedDate.value? formatToDate(selectedDate.value) : null,
+      prazo: selectedDate.value? formatToDate(selectedDate.value) : null,
     };
 
     api.put(`/tasks/${id.value}`, data)
@@ -171,7 +171,7 @@ const deleteTask = (taskId) => {
                     <v-list-item
                         v-for="(item, i) in items"
                         :key="i"
-                        @click="item.action === 'delete' ? deleteTask(taskId) : openEditTask(taskId, taskTitle, taskDescription, taskStatus, taskDeadLine, taskCreatedAt)"
+                        @click="item.action === 'delete' ? deleteTask(taskId) : openEditTask(taskId, taskTitle, taskDescription, taskStatus, taskprazo, taskCreatedAt)"
                     >
                         <v-list-item-title>{{ item.title }}</v-list-item-title>
                     </v-list-item>
@@ -181,9 +181,9 @@ const deleteTask = (taskId) => {
 
         <p v-if="taskDescription != null" class="taskInfoCard__description">{{ taskDescription }}</p>
 
-        <div v-if="taskDeadLine != null" class="taskInfoCard__deadLine">
+        <div v-if="taskprazo != null" class="taskInfoCard__prazo">
             <v-icon icon="mdi-calendar" />
-            <p class="taskInfoCard__date">{{ formatDateForDisplay(taskDeadLine) }}</p>
+            <p class="taskInfoCard__date">{{ formatDateForDisplay(taskprazo) }}</p>
         </div>
     </div>
 
@@ -299,7 +299,7 @@ const deleteTask = (taskId) => {
     margin: 0.5rem 0rem 0.75rem;
 }
 
-.taskInfoCard__deadLine {
+.taskInfoCard__prazo {
     display: flex;
     flex-direction: row;
     align-items: center;

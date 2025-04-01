@@ -1,8 +1,9 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, defineEmits } from 'vue';
   import api from '../plugins/axios.js'
   import Swal from 'sweetalert2';
 
+  const searchTitle = ref('');
   const dialog = ref(false);
   const menu = ref(false);
   const selectedDate = ref('');
@@ -17,6 +18,13 @@
     { text: 'Concluído', value: 'completed' },
   ];
 
+  const emit = defineEmits(['search']);
+
+  const handleSearch = (event) => {
+    if (event.key === 'Enter') {
+      emit('search', searchTitle.value);
+    }
+  };
 
   const saveTask = () => {
     if (!title.value || !status.value) {
@@ -28,7 +36,7 @@
       titulo: title.value,
       descricao: description.value,
       status: status.value.value,
-      deadLine: selectedDate.value? formattToDate(selectedDate.value) : null,
+      prazo: selectedDate.value? formattToDate(selectedDate.value) : null,
     };
 
     api.post('/tasks', data)
@@ -75,7 +83,7 @@
 
 <template>
   <div class="searchAddBar">
-    <input type="text" class="searchAddBar__input" placeholder="Pesquise por título..." />
+    <input v-model="searchTitle" @keydown="handleSearch" type="text" class="searchAddBar__input" placeholder="Pesquise por título..." />
     <button class="searchAddBar__button" @click="dialog = true">Adicionar</button>
   </div>
 
@@ -154,6 +162,7 @@
 
   &&:focus {
     background-color: var(--secondary-color);
+    color: white;
 
     &&::placeholder {
       color: white;

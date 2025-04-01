@@ -5,27 +5,59 @@ import SearchAddBar from '../components/SearchAddBar.vue'
 import TaskCardList from '../components/TaskCardList.vue'
 
 const tasks = ref([]);
+const searchQuery = ref('');
 const pendingTasks = ref([]);
 const inProgressTasks = ref([]);
 const completedTasks = ref([]);
 
 onMounted(() => {
+    getTasks();
+}); 
+
+const getTasks = () => {
     api.get('/tasks')
     .then((response) => {
         tasks.value = response.data;
-
-        pendingTasks.value = tasks.value.filter(task => task.status === 'pending');
-        inProgressTasks.value = tasks.value.filter(task => task.status === 'inProgress');
-        completedTasks.value = tasks.value.filter(task => task.status === 'completed');
+        filterTasks(tasks)
     })
     .catch(error => {
         console.error("Erro ao buscar tarefas:", error);
     });
-});       
+}
+
+const handleSearch = (query) => {
+  searchQuery.value = query;
+
+  if (searchQuery.value == "") {
+    getTasks()
+    return;
+  }
+
+  api.get('/tasks/search/',
+    {
+        params: {
+            title: searchQuery.value
+        },
+    }
+  )
+    .then((response) => {
+        tasks.value = response.data;
+        filterTasks(tasks)
+    })
+    .catch(error => {
+        console.error("Erro ao buscar tarefas:", error);
+    });
+};
+
+const filterTasks = (tasks) => {
+    pendingTasks.value = tasks.value.filter(task => task.status === 'pending');
+    inProgressTasks.value = tasks.value.filter(task => task.status === 'inProgress');
+    completedTasks.value = tasks.value.filter(task => task.status === 'completed');
+}
 </script>
 <template>
     <div class="taskList">
-        <SearchAddBar/>
+        <SearchAddBar @search="handleSearch"/>
         <div class="taskList__sections">
             <TaskCardList titleCard="Pendente" :tasks="pendingTasks"/>
             <TaskCardList titleCard="Em andamento" :tasks="inProgressTasks"/>
