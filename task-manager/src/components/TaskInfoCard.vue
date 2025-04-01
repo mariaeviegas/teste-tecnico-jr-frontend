@@ -1,7 +1,10 @@
 <script setup>
+import Swal from "sweetalert2";
+import api from "../plugins/axios.js";
+
 const items = [
-    { title: 'Editar' },
-    { title: 'Excluir' },
+    { title: 'Editar', action: 'edit' },
+    { title: 'Excluir', action: 'delete' },
 ];
 
 defineProps({
@@ -32,26 +35,62 @@ const formatDate = (dateString) => {
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
 };
+
+const deleteTask = (taskId) => {
+    Swal.fire({
+        title: "Tem certeza?",
+        text: "Você não poderá reverter esta ação!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sim, excluir!",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            api.delete(`/tasks/${taskId}`)
+                .then(() => {
+                    Swal.fire({
+                        title: "Excluído!",
+                        text: "A tarefa foi excluída com sucesso.",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then(() => {
+                        location.reload();
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Swal.fire({
+                        title: "Erro!",
+                        text: "Não foi possível excluir a tarefa. Tente novamente.",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                });
+        }
+    });
+};
 </script>
 <template>
     <div :class="['taskInfoCard', taskStatus]">
         <div class="taskInfoCard__mainInfo">
             <h1 :class="['mainInfo__title', taskStatus]">{{ taskId }} - {{ taskTitle }}</h1>
             <v-menu>
-            <template v-slot:activator="{ props }">
-              <v-btn icon="mdi-dots-horizontal" variant="text" v-bind="props"></v-btn>
-            </template>
+                <template v-slot:activator="{ props }">
+                    <v-btn icon="mdi-dots-horizontal" variant="text" v-bind="props"></v-btn>
+                </template>
 
-            <v-list>
-              <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-                :value="i"
-              >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+                <v-list>
+                    <v-list-item
+                        v-for="(item, i) in items"
+                        :key="i"
+                        @click="item.action === 'delete' ? deleteTask(taskId) : editTask(taskId)"
+                    >
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
         </div>
 
         <p v-if="taskDescription != null" class="taskInfoCard__description">{{ taskDescription }}</p>
@@ -61,7 +100,6 @@ const formatDate = (dateString) => {
             <p class="taskInfoCard__date">{{ formatDate(taskDeadLine) }}</p>
         </div>
     </div>
-
 </template>
 <style scoped>
 .taskInfoCard {
